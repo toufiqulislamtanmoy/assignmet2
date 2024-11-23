@@ -9,4 +9,5 @@ export interface IProduct {
   description: string;
   quantity: number;
   inStock: boolean;
+  isDeleted: boolean
 }

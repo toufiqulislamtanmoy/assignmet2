@@ -35,9 +35,26 @@ const productSchema = new Schema<IProduct>(
       type: Boolean,
       default: true,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
+
+// create a query pre middleware to only send those data isDeleted is false
+productSchema.pre("find", function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+// create another middleware to return only single product that is not deleted
+productSchema.pre("findOne", function (next) {
+  this.findOne({ isDeleted: { $ne: true } });
+  next();
+});
+
 // Create the product model
 const Product = model<IProduct>("Product", productSchema);
 export default Product;

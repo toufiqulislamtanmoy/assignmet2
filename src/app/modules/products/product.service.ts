@@ -30,10 +30,17 @@ const updateProduct = async (id:string, product:IProduct) => {
     return null;
 }
 
+// delete product
+const deleteProduct = async (id:string) => {
+    const result = await Product.updateOne({_id:id}, {isDeleted:true});
+    return result;
+}
+
 // export all the methods
 export const ProductService = {
     insertProduct,
     getAllProducts,
     getSingleProduct,
-    updateProduct
+    updateProduct,
+    deleteProduct
 }
